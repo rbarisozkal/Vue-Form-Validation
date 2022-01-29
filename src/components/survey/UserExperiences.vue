@@ -1,13 +1,15 @@
 <template>
   <section>
     <base-card>
-      <h2>Submitted Experiences</h2>
+      <h2>Experiences</h2>
       <div>
         <base-button @click="loadExperiences"
-          >Load Submitted Experiences</base-button
+          >List Submitted Experiences</base-button
         >
       </div>
-      <ul>
+      <p v-if="isLoaded">Loading Data</p>
+      <p v-else-if="!isLoaded && (!results || results.length === 0)">Data not found</p>
+      <ul v-else-if="!isLoaded && results && results.length > 0">
         <survey-result
           v-for="result in results"
           :key="result.id"
@@ -29,12 +31,15 @@ export default {
   data() {
     return {
       results: [],
+      isLoaded: false,
     };
   },
   methods: {
     loadExperiences() {
+      this.isLoaded = true;
       fetch(`https://vueproject-5a032-default-rtdb.firebaseio.com/surveys.json`)
         .then((res) => {
+          this.isLoaded = false;
           if (res.ok) {
             return res.json();
           }
@@ -48,14 +53,13 @@ export default {
               rating: data[id].rating,
             });
           }
-          this.results=results;
+          this.results = results;
         });
     },
-   
   },
-  created(){
+  created() {
     this.loadExperiences();
-  }
+  },
 };
 </script>
 

@@ -1,10 +1,10 @@
 <template>
   <section>
     <base-card>
-      <h2>How was you learning experience?</h2>
+      <h2>How was your learning experience?</h2>
       <form @submit.prevent="submitSurvey">
         <div class="form-control">
-          <label for="name">Your Name</label>
+          <label for="name">Name</label>
           <input type="text" id="name" name="name" v-model.trim="enteredName" />
         </div>
         <h3>My learning experience was ...</h3>
